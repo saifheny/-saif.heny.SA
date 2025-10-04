@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Aplicaciones</title>
+    <style>
+        /* --- Estilos Generales (CSS) --- */
+        html {
+            height: 100%;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column; /* Organiza el contenido en una columna */
+            min-height: 100vh;
+            margin: 0;
+            padding: 0 20px; 
+            box-sizing: border-box; 
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        /* --- Contenedor Principal --- */
+        .main-container {
+            max-width: 1200px;
+            margin: auto; /* Centra el contenido verticalmente y horizontalmente */
+            text-align: center;
+            width: 100%;
+        }
+
+        /* --- Contenedor de las Aplicaciones --- */
+        .apps-grid {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 50px; 
+        }
+
+        /* --- Tarjeta de cada Aplicación --- */
+        .app-card {
+            background-color: rgba(0, 0, 0, 0.45);
+            border-radius: 20px;
+            padding: 25px;
+            width: 280px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
+            overflow: visible; 
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        /* --- Imagen de la mano superpuesta --- */
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 5px;      
+            left: 70px;     
+            width: 180px;   
+            height: 180px;  
+            background-image: url('https://i.postimg.cc/MTSBnKq0/download-6.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 1; 
+            pointer-events: none; 
+            transition: all 0.3s ease; 
+        }
+
+        /* --- Contenedor de la Imagen (Simula el teléfono) --- */
+        .app-image-container {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 15px auto;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease; 
+        }
+        
+        .phone-frame {
+             background-image: url('https://i.postimg.cc/5NBKkjkF/download-7-1.png');
+        }
+        
+        .app-icon {
+            width: 70%; 
+            border-radius: 22%;
+        }
+
+        /* --- Título 3D de la Aplicación --- */
+        .app-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 0px #000,
+                         2px 2px 0px #000,
+                         3px 3px 0px rgba(0,0,0,0.5);
+            transition: all 0.3s ease; 
+        }
+
+        /* --- Botón 3D de Instalar --- */
+        .install-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.15s ease;
+            position: relative; 
+            z-index: 0;
+            border-bottom: 5px solid #0056b3; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .install-button:hover {
+            background-color: #0069d9;
+        }
+        
+        .install-button:active {
+            top: 3px; 
+            border-bottom-width: 2px; 
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2); 
+        }
+
+        /* --- ## NUEVO: Estilos del Pie de Página ## --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Empuja el pie de página hacia la parte inferior */
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-icons a {
+            margin: 0 15px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icons img {
+            width: 40px; /* Tamaño de los íconos */
+            height: 40px;
+        }
+
+        .footer-text {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .footer-text code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* --- ESTILOS PARA MÓVILES --- */
+        @media (max-width: 600px) {
+            .apps-grid {
+                gap: 15px; 
+                align-items: center; 
+                flex-wrap: nowrap;
+                justify-content: flex-start; /* Permite el desplazamiento */
+                overflow-x: auto; /* Habilita el desplazamiento horizontal */
+                padding: 10px;
+            }
+            
+            .app-card {
+                width: 140px; 
+                padding: 15px; 
+                flex-shrink: 0; 
+            }
+
+            .app-image-container {
+                width: 110px; 
+                height: 110px;
+            }
+
+            .app-title {
+                font-size: 1.1em; 
+                margin-bottom: 10px;
+            }
+
+            .install-button {
+                font-size: 0.9em; 
+                padding: 10px;
+            }
+            
+            .app-card::before {
+                width: 90px;
+                height: 90px;
+                top: 0px;
+                left: 30px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="apps-grid">
+            <!-- Aplicación 1: Juego XO -->
+            <div class="app-card" data-url="https://saifheny.github.io/-Download-XO/">
+                <div class="app-image-container phone-frame">
+                    <img src="https://i.postimg.cc/RF67HbHS/cropped-Xo-Logo2-1.png" alt="Logo de XO" class="app-icon">
+                </div>
+                <div class="app-title">XO Game</div>
+                <button class="install-button">Instalar</button>
+            </div>
+
+            <!-- Aplicación 2: Plataforma de Pruebas -->
+            <div class="app-card" data-url="https://saifheny.github.io/Testing.Platform.APP/">
+                <div class="app-image-container phone-frame">
+                    <img src="https://i.postimg.cc/CKkRjTKp/Whats-App-Image-2025-10-02-at-4-15-54-PM.png" alt="Logo de Plataforma de Pruebas" class="app-icon">
+                </div>
+                <div class="app-title">Testing Platform</div>
+                <button class="install-button">Instalar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ## NUEVO: Pie de Página ## -->
+    <footer>
+        <div class="social-icons">
+            <a href="https://wa.me/01202687082" target="_blank">
+                <img src="https://i.postimg.cc/vBLLq4Gs/download-10.png" alt="WhatsApp">
+            </a>
+            <a href="http://www.youtube.com/@%D9%83%D9%88%D9%85%D9%8A%D8%AF%D9%8A%D9%83%D9%881" target="_blank">
+                <img src="https://i.postimg.cc/902V2n3b/YouTube.png" alt="YouTube">
+            </a>
+        </div>
+        <div class="footer-text">
+            <p>Copyright © 2025 SA International Company. All rights reserved.</p>
+            <p><code>&lt;Designed and Developed by Saif Hany /&gt;</code></p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const backgrounds = [
+                'https://i.postimg.cc/SQY27Mth/download-8.jpg',
+                'https://i.postimg.cc/mk9PbvFt/download-4.jpg',
+                'https://i.postimg.cc/c1tgMnkp/download-9.jpg'
+            ];
+            const randomIndex = Math.floor(Math.random() * backgrounds.length);
+            document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
+
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        window.open(url, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
